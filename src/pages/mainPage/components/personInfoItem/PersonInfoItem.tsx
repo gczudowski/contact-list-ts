@@ -5,6 +5,7 @@ import NameInitials from '@src/pages/mainPage/components/nameInitials/NameInitia
 import PersonDetails from '@src/pages/mainPage/components/personDetails/PersonDetails';
 import { IContactStateItem } from '@src/types/contacts.type';
 import { MediaQueries } from '@src/types/css';
+import { Flipped } from 'react-flip-toolkit';
 
 type Props = {
   contactItem: IContactStateItem;
@@ -16,18 +17,19 @@ function PersonInfoItem({ contactItem, onClick }: Props): ReactElement {
   const { firstNameLastName, jobTitle, emailAddress, isActive, id: itemId } = contactItem;
 
   return (
-    <div
-      className={`${classes.container} ${isActive && classes.containerActive}`}
-      onClick={() => {
-        onClick({ itemId, isActive: !!isActive });
-      }}>
-      <div className={classes.header}>
-        <NameInitials firstNameLastName={firstNameLastName} />
-        <PersonDetails firstNameLastName={firstNameLastName} jobTitle={jobTitle} />
+    <Flipped key={contactItem.id} flipId={contactItem.id}>
+      <div
+        className={`${classes.container} ${isActive && classes.containerActive}`}
+        onClick={() => {
+          onClick({ itemId, isActive: !!isActive });
+        }}>
+        <div className={classes.header}>
+          <NameInitials firstNameLastName={firstNameLastName} />
+          <PersonDetails firstNameLastName={firstNameLastName} jobTitle={jobTitle} />
+        </div>
+        <div className={classes.emailAddress}>{emailAddress}</div>
       </div>
-
-      <div className={classes.emailAddress}>{emailAddress}</div>
-    </div>
+    </Flipped>
   );
 }
 
